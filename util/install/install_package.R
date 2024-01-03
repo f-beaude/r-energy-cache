@@ -8,7 +8,7 @@ if (! require("devtools")) install.packages("devtools")
 if (! require("remotes")) install.packages("remotes")
 if (! require("withr")) install.packages("withr")
 
-# retrieve the generic configuration file
+# retrieve the generic configuration file (returns NULL if the config file doesn't exist)
 packageInstallConfig <- config::get(value = "package-install", file = "r-config.yaml",
                                config = Sys.getenv("R_CONFIG_ACTIVE", "default"))
 
@@ -20,6 +20,7 @@ if ((! is.null(packageInstallConfig)) && (! is.null(packageInstallConfig[["direc
   stopifnot (dir.exists(destinationPath))
 }
 
+# avoid compiling packages from sources (to save time)
 options(install.packages.compile.from.source = "never")
 
 # Generic installation function
